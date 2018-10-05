@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Coq for Haskell programmers</title>
+<meta name="author" content="(Anton Trunov)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/beige.css" id="theme"/>
+
+<link rel="stylesheet" href="./modifications.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1>Coq for Haskell programmers</h1><h2>Anton Trunov</h2><h3>Madrid&nbsp;Haskell&nbsp;Users&nbsp;Group</h3><h4>04.10.2018</h4>
+</section>
+
+<section>
+<section id="slide-org580f66a">
+<h2 id="org580f66a">What is Coq ?</h2>
+<p>
+Coq is a formal proof management system.
+It provides
+</p>
+<ul>
+<li>a language to write mathematical definitions,</li>
+<li>executable algorithms,</li>
+<li>theorems (specifications),</li>
+<li>environment for interactive development of machine-checked proofs.</li>
+
+</ul>
+<p>
+The project started at INRIA a long time ago.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org72159bd">
+<h2 id="org72159bd">Broader context</h2>
+<p>
+The land of formal methods includes
+</p>
+<ul>
+<li>Specification languages</li>
+<li>Interactive theorem provers</li>
+<li>SAT/SMT solvers</li>
+<li>Model checking</li>
+<li>Program Logics</li>
+<li>&#x2026;</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org8754fa0">
+<h2 id="org8754fa0">Related systems</h2>
+<ul>
+<li>Lean prover (similar to Coq)</li>
+<li>Agda (no impredicativity)</li>
+<li>Idris (similar to Agda)</li>
+<li>F* (used to verify crypto code in Firefox)</li>
+<li>Isabelle/HOL (very different from Coq, seL4)</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgd17bb32">
+<h2 id="orgd17bb32">What do people use Coq for?</h2>
+<p>
+Formalization of mathematics:
+</p>
+<ul>
+<li>Four color theorem,</li>
+<li>Feit-Thompson theorem</li>
+<li>Homotopy type theory.</li>
+
+</ul>
+<p>
+Education: it's a proof <span class="underline">assistant</span>.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org71dcd5b" data-background="images/deepspec.png" data-background-size="1600px" data-background-transition="slide">
+<h2 id="org71dcd5b"></h2>
+</section>
+</section>
+<section>
+<section id="slide-orgdd4b574">
+<h2 id="orgdd4b574">More examples</h2>
+<ul>
+<li>Coq-generated crypto code in Chrome</li>
+<li><a href="https://github.com/mit-pdos/fscq">FSCQ</a>: a file system written and verified in Coq</li>
+<li>Cryptocurrencies (e.g. Tezos, Zilliqa)</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org5d87ac8" data-background="images/scilla-coq.jpg" data-background-size="1600px" data-background-transition="slide">
+<h2 id="org5d87ac8"></h2>
+</section>
+</section>
+<section>
+<section id="slide-orgf223650">
+<h2 id="orgf223650">Coq, its ecosystem and community</h2>
+<ul>
+<li>open source (<a href="https://github.com/coq/coq">https://github.com/coq/coq</a>)</li>
+<li>written in OCaml</li>
+<li>has a standard library</li>
+<li>lots of packages available on OPAM</li>
+<li>community-driven projects: <a href="https://github.com/coq-community/">https://github.com/coq-community/</a></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgff00d30">
+<h2 id="orgff00d30">Coq repo stats (LoC)</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Language</th>
+<th scope="col" class="org-right">files</th>
+<th scope="col" class="org-right">code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">OCaml</td>
+<td class="org-right">949</td>
+<td class="org-right">203230</td>
+</tr>
+
+<tr>
+<td class="org-left">Coq</td>
+<td class="org-right">1970</td>
+<td class="org-right">196057</td>
+</tr>
+
+<tr>
+<td class="org-left">TeX</td>
+<td class="org-right">26</td>
+<td class="org-right">5270</td>
+</tr>
+
+<tr>
+<td class="org-left">Markdown</td>
+<td class="org-right">22</td>
+<td class="org-right">3362</td>
+</tr>
+
+<tr>
+<td class="org-left">Bourne Shell</td>
+<td class="org-right">107</td>
+<td class="org-right">2839</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section>
+<section id="slide-org4ca892d">
+<h2 id="org4ca892d">Mathcomp stats (LoC)</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Language</th>
+<th scope="col" class="org-right">files</th>
+<th scope="col" class="org-right">code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">HTML        :)</td>
+<td class="org-right">377</td>
+<td class="org-right">299260</td>
+</tr>
+
+<tr>
+<td class="org-left">Coq</td>
+<td class="org-right">92</td>
+<td class="org-right">83726</td>
+</tr>
+
+<tr>
+<td class="org-left">JavaScript</td>
+<td class="org-right">13</td>
+<td class="org-right">34363</td>
+</tr>
+
+<tr>
+<td class="org-left">CSS</td>
+<td class="org-right">6</td>
+<td class="org-right">1199</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section>
+<section id="slide-orgbc1fe97" data-background="images/fscq-bug.png" data-background-size="1600px" data-background-transition="slide">
+<h2 id="orgbc1fe97"></h2>
+</section>
+</section>
+<section>
+<section id="slide-org1efb187">
+<h2 id="org1efb187">Proofs <span class="underline">and</span> Tests</h2>
+<ul>
+<li><code>@vj_chidambaram</code>: Even verified file systems have unverified parts :)</li>
+<li>FSCQ had a buggy optimization in the Haskell-C bindings</li>
+<li>CompCert is known to also have bugs in the non-verified parts</li>
+<li>QuickChick shows an amazing applicability of randomized testing in the context of theorem proving</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgb1575c7">
+<h2 id="orgb1575c7">FSCQ stats (LoC)</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Language</th>
+<th scope="col" class="org-right">files</th>
+<th scope="col" class="org-right">code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Coq</td>
+<td class="org-right">98</td>
+<td class="org-right">81049</td>
+</tr>
+
+<tr>
+<td class="org-left">C</td>
+<td class="org-right">36</td>
+<td class="org-right">4132</td>
+</tr>
+
+<tr>
+<td class="org-left">Haskell</td>
+<td class="org-right">8</td>
+<td class="org-right">1091</td>
+</tr>
+
+<tr>
+<td class="org-left">OCaml</td>
+<td class="org-right">10</td>
+<td class="org-right">687</td>
+</tr>
+
+<tr>
+<td class="org-left">Python</td>
+<td class="org-right">9</td>
+<td class="org-right">643</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section>
+<section id="slide-orgc632125">
+<h2 id="orgc632125">CompCert C Compiler stats (LoC)</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Language</th>
+<th scope="col" class="org-right">files</th>
+<th scope="col" class="org-right">code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Coq</td>
+<td class="org-right">223</td>
+<td class="org-right">146226</td>
+</tr>
+
+<tr>
+<td class="org-left">C</td>
+<td class="org-right">223</td>
+<td class="org-right">65053</td>
+</tr>
+
+<tr>
+<td class="org-left">OCaml</td>
+<td class="org-right">147</td>
+<td class="org-right">28381</td>
+</tr>
+
+<tr>
+<td class="org-left">C/C++ Header</td>
+<td class="org-right">86</td>
+<td class="org-right">7834</td>
+</tr>
+
+<tr>
+<td class="org-left">Assembly</td>
+<td class="org-right">59</td>
+<td class="org-right">1542</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section>
+<section id="slide-org88d06ff">
+<h2 id="org88d06ff">What is Coq based on?</h2>
+<p>
+<span class="underline"><b>Calculus of Inductive Constructions</b></span>
+</p>
+
+<p>
+Just some keywords:
+</p>
+<ul>
+<li>Dependent types (expressivity!)</li>
+<li>Curry-Howard Correspondence</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orge8d9b7e">
+<h2 id="orge8d9b7e">Curry-Howard Correspondence</h2>
+<ul>
+<li>Main idea:
+<ul>
+<li>propositions are special case of types</li>
+<li>a proof is a program of the required type</li>
+
+</ul></li>
+<li>One language to rule 'em all</li>
+<li>Proof checking = Type checking!</li>
+<li>Proving = Programming</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org7afa435">
+<h2 id="org7afa435">Proving <span class="underline">is</span> programming</h2>
+<ul>
+<li>High confendence in your code</li>
+<li>It is as strong as strong your specs are (trust!)</li>
+<li>It can be extremely hard to come up with a spec (think of browsers)</li>
+<li>IMHO: the best kind of programming</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orga5300df">
+<h2 id="orga5300df">Dependent types</h2>
+<p>
+array(n)
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org060733f">
+<h2 id="org060733f">Let's step back a bit: Peano numbers</h2>
+<div class="org-src-container">
+
+<pre  class="src src-coq"><span style="color: #4f97d7; font-weight: bold;">Inductive</span> <span style="color: #bc6ec5; font-weight: bold;">nat</span> :=
+| O : nat
+| S : nat -&gt; nat.
+</pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgc97331d">
+<h2 id="orgc97331d">Dependent types: even numbers</h2>
+<div class="org-src-container">
+
+<pre  class="src src-coq"><span style="color: #4f97d7; font-weight: bold;">Inductive</span> <span style="color: #bc6ec5; font-weight: bold;">even</span> :=
+| ev0 : even 0
+| evSS : even n -&gt; even (S (S n)).
+</pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgebb0c24">
+<h2 id="orgebb0c24">Dependent types: even numbers</h2>
+<div class="org-src-container">
+
+<pre  class="src src-coq"><span style="color: #4f97d7; font-weight: bold;">Inductive</span> <span style="color: #bc6ec5; font-weight: bold;">even</span> :=
+| ev0 : even 0
+| evSS : even n -&gt; even (S (S n)).
+
+(evSS (evSS (evSS ev0))) : even 6.
+</pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org57d4747">
+<h2 id="org57d4747">Simple types</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Type</th>
+<th scope="col" class="org-left">Haskell</th>
+<th scope="col" class="org-left">Proposition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Empty type</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Contradiction (⊥)</td>
+</tr>
+
+<tr>
+<td class="org-left">Unit type</td>
+<td class="org-left"><code>()</code></td>
+<td class="org-left">Trivial prop. (⊤)</td>
+</tr>
+
+<tr>
+<td class="org-left">Product type</td>
+<td class="org-left"><code>(a,b)</code></td>
+<td class="org-left">Conjunction (∧)</td>
+</tr>
+
+<tr>
+<td class="org-left">Sum type</td>
+<td class="org-left"><code>Either</code></td>
+<td class="org-left">Disjunction (∨)</td>
+</tr>
+
+<tr>
+<td class="org-left">Function type</td>
+<td class="org-left"><code>a -&gt; b</code></td>
+<td class="org-left">Implication (⊃)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section>
+<section id="slide-org6c96222">
+<h2 id="org6c96222">Simple proof</h2>
+<div class="org-src-container">
+
+<pre  class="src src-coq">(<span style="color: #ce537a; font-weight: bold;">fun</span> '(a, b) =&gt; (b, a)) : (A * B) -&gt; (B * A)
+</pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org28dc98e">
+<h2 id="org28dc98e">Dependent types</h2>
+<p>
+How do we represent ∀ and ∃?
+</p>
+
+<p>
+We need dependent types!
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Type</th>
+<th scope="col" class="org-left">Proposition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Dependent funtion type</td>
+<td class="org-left">Universal quantifier (∀)</td>
+</tr>
+
+<tr>
+<td class="org-left">Dependent sum type</td>
+<td class="org-left">Existential quantifier (∃)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section>
+<section id="slide-org135d1eb">
+<h2 id="org135d1eb">Dependent function type</h2>
+<p>
+∀ x : A, B x
+</p>
+<ul>
+<li>Generalizes the arrow type</li>
+<li>Programs of type <code>∀ x : A, B x</code> are functions,
+whose return <b>type</b> depends on the input <b>value</b>.</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgb1c3237">
+<h2 id="orgb1c3237">Dependent sum type</h2>
+<p>
+∃ x : A, B x
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-coq"><span style="color: #4f97d7; font-weight: bold;">Inductive</span> <span style="color: #bc6ec5; font-weight: bold;">Exists</span> (<span style="color: #7590db;">A</span> : <span style="color: #ce537a; font-weight: bold;">Type</span>) (<span style="color: #7590db;">P</span> : A -&gt; <span style="color: #ce537a; font-weight: bold;">Prop</span>) :=
+| mkExists : <span style="color: #ce537a; font-weight: bold;">forall</span> <span style="color: #7590db;">x</span> : A, P x -&gt; Exists A P.
+</pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org4483f77">
+<h2 id="org4483f77">Coq as Programming Language</h2>
+<ul>
+<li>Functional</li>
+<li>Dependently-typed</li>
+<li><b>Total</b> language</li>
+<li>Extraction</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org0b0b674">
+<h2 id="org0b0b674">Extraction</h2>
+<ul>
+<li>OCaml</li>
+<li>Haskell</li>
+<li>Scheme</li>
+<li>C via <a href="https://github.com/akr/codegen">https://github.com/akr/codegen</a></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orge81cd87" data-background="images/xmonad.png" data-background-size="1600px" data-background-transition="slide">
+<h2 id="orge81cd87"></h2>
+</section>
+</section>
+<section>
+<section id="slide-org33c164b">
+<h2 id="org33c164b">Extraction: xmonad</h2>
+<ul>
+<li><a href="http://www.staff.science.uu.nl/~swier004/publications/2012-haskell.pdf">xmonad in Coq (Experience Report)</a> by Wouter Swierstra (2012)</li>
+<li>it's possible!</li>
+<li>the report shows there is lots of room for improvement</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org175d825">
+<h2 id="org175d825">Haskell and Coq</h2>
+<ul>
+<li><a href="https://github.com/antalsz/hs-to-coq">hs-to-coq</a> - Haskell to Coq converter</li>
+<li><a href="https://deepspec.org/entry/Project/Haskell+CoreSpec">Deepspec: Haskell+CoreSpec</a></li>
+<li><a href="https://github.com/jwiegley/coq-haskell">coq-haskell</a> - A library for formalizing Haskell types and functions in Coq</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org91c5540">
+<h2 id="org91c5540"><a href="https://github.com/antalsz/hs-to-coq">hs-to-coq</a> - Haskell to Coq converter</h2>
+<ul>
+<li>part of the CoreSpec component of the DeepSpec project</li>
+<li>has been applied to verification Haskell’s <code>containers</code> library against specs derived from
+<ul>
+<li>type class laws;</li>
+<li>library’s test suite;</li>
+<li>interfaces from Coq’s stdlib.</li>
+
+</ul></li>
+<li>challenge: partiality</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org1122ce9">
+<h2 id="org1122ce9"><a href="https://deepspec.org/entry/Project/Haskell+CoreSpec">Deepspec: Haskell+CoreSpec</a></h2>
+<ul>
+<li>a new formal calculus describing the GHC core language</li>
+<li>proven type soundness</li>
+<li>compatible with extensions of Haskell with dependent types</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org65944fb">
+<h2 id="org65944fb"><a href="https://github.com/jwiegley/coq-haskell">coq-haskell</a> library</h2>
+<ul>
+<li>designed for Haskell users who are either
+<ul>
+<li>using Coq to build code intended for extraction to Haskell</li>
+<li>or who wish to prototype/prove their algorithms in Coq</li>
+
+</ul></li>
+<li>provides a collection of definitions and notations to make Gallina more familiar to Haskellers</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org1ff24c1">
+<h2 id="org1ff24c1"><a href="https://github.com/mattam82/Coq-Equations">Coq-Equations</a> plugin</h2>
+<div class="org-src-container">
+
+<pre  class="src src-coq"><span style="color: #4f97d7; font-weight: bold;">Equations</span> <span style="color: #9370db;">fold</span> {&#945; &#946;} (<span style="color: #7590db;">f</span> : &#945; -&gt; &#946; -&gt; &#946;) (<span style="color: #7590db;">v</span> : &#946;) (<span style="color: #7590db;">xs</span> : list &#945;) : &#946; :=
+
+<span style="color: #9370db;">fold</span> f v []            := v ;
+<span style="color: #9370db;">fold</span> f v (cons h tail) := f h (<span style="color: #9370db;">fold</span> f v tail).
+</pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgd3a810d">
+<h2 id="orgd3a810d">Recommended reading</h2>
+<p>
+Books:
+</p>
+<ul>
+<li><a href="https://softwarefoundations.cis.upenn.edu/current/index.html">The Software Foundations series</a> by B.C. Pierce et al.</li>
+<li><a href="http://ilyasergey.net/pnp/">Programs and Proofs</a> by Ilya Sergey</li>
+
+</ul>
+<p>
+Blog posts and papers:
+</p>
+<ul>
+<li><a href="https://www.joachim-breitner.de/blog/734-Finding_bugs_in_Haskell_code_by_proving_it">Finding bugs in Haskell code by proving it</a> by J. Breitner</li>
+<li><a href="http://blog.ezyang.com/2014/03/haskell-for-coq-programmers/">Haskell for Coq programmers</a> by E.Z. Yang</li>
+<li><a href="https://arxiv.org/pdf/1803.06960.pdf">Ready, Set, Verify! Applying hs-to-coq to real-world Haskell code</a> - J. Breitner et. al (2018)</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgab7de23">
+<h2 id="orgab7de23">Questions?</h2>
+</section>
+</section>
+<section>
+<section id="slide-org81b17f0">
+<h2 id="org81b17f0">Thank you!</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+* Coq for Haskell programmers talk
+  
+These are materials for my "Coq for Haskell programmers" talk given in Madrid on Oct. 4, 2018.
