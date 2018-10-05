@@ -239,5 +239,9 @@ Blog posts and papers:
 - [[https://www.joachim-breitner.de/blog/734-Finding_bugs_in_Haskell_code_by_proving_it][Finding bugs in Haskell code by proving it]] by J. Breitner
 - [[http://blog.ezyang.com/2014/03/haskell-for-coq-programmers/][Haskell for Coq programmers]] by E.Z. Yang
 - [[https://arxiv.org/pdf/1803.06960.pdf][Ready, Set, Verify! Applying hs-to-coq to real-world Haskell code]] - J. Breitner et. al (2018)
+* More papers
+- [[https://www.cs.purdue.edu/homes/bendy/Fiat/FiatByteString.pdf][Using Coq to Write Fast and Correct Haskell]] by J. Wiegley, B. Delaware (2018)
+- [[https://arxiv.org/abs/1711.09286][Total Haskell is Reasonable Coq]] by A. Spector-Zabusky et al. (2018)
+- [[https://cs.brynmawr.edu/~rae/papers/2017/dep-haskell-spec/dep-haskell-spec.pdf][A Specification for Dependent Types in Haskell]] by S. Weirich et al. (2017)
 * Questions?
 * Thank you!
